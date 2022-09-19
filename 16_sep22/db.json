@@ -1,0 +1,15 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "name": "rutuja",
+      "lastname": "chandgude"
+    },
+    {
+      "id": 2,
+      "name": "ashlesha",
+      "lastname": "ashture"
+    }
+  ]
+ 
+}
