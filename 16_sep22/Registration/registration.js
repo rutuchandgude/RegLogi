@@ -5,13 +5,42 @@ const email = document.getElementById("emailid");
 const mobileNo = document.getElementById("mobileno");
 const password = document.getElementById("pass");
 const cpassword = document.getElementById("cpassword");
-// const radioBtn = document.querySelector(".radiobtn");
-const selectStream = document.getElementById("slctstream");
+const radioBtn = document.getElementsByName("gender");
+const selectStream = document.querySelector("#slctstream");
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   validate();
-  // console.log("submit");
+
+  
+let form =  {
+  
+    "id": 13,
+    "First name":firstName,
+    "Last name":lasttName,
+    "Mobile number":mobileNo,
+    "Email id":email,
+    "Password":password,
+    "Confirm Password":cpassword,
+    "Gender":radioBtn,
+    "Select Stream":selectStream
+  
+};
+  //console.log(form);
+  // const payload=new FormData();
+
+  const formData = new FormData();
+  formData.append('First name', firstName.value);
+  console.log([...formData]);
+  fetch("http://localhost:3000/registration",{
+  method:'POST',
+  body:formData,})
+  .then(res=>res.json())
+  .then(data=>console.log(data))
+  .catch(err=>console.log(err));
+
+ 
+
 });
 
 const sendData = (sRate,count)=>{
@@ -42,8 +71,9 @@ const validate = () => {
   const phoneVal = mobileNo.value.trim();
   const passwordVal = password.value.trim();
   const cpasswordVal = cpassword.value.trim();
-//   const radioBtnVal = radioBtn.value.trim();
-  const selectStreamVal = selectStream.value.trim();
+  const radioBtnVal = radioBtn.value;
+   const selectStreamVal = selectStream.options[selectStream.selectedIndex].text;
+  
 
   //validate usename
   if (firstNameVal === "") {
@@ -118,20 +148,25 @@ const validate = () => {
   } else {
     setSuccessMsg(cpassword);
   }
-
   
    //Gender
-   if (radioBtnVal === "") {
-    setErrorMsg(radioBtn, "gender cannot be blank");
-  } else {
-    setSuccessMsg(radioBtn);
-  }
+   let i=0;
+   if(radioBtn[i].checked){
+console.log("Gender: "+radioBtn[i].value);
+   }else if(radioBtn[i+1].checked){
+    console.log("Gender: "+radioBtn[i+1].value);
+   }else if(radioBtn[i+2].checked){
+    console.log("Gender: "+radioBtn[i+2].value);
+   }else{
+    setErrorMsg("select gender");
+   }
 
    //Select stream
    if (selectStreamVal === "") {
-    setErrorMsg(selectStream, "Please Select stram");
+    setErrorMsg(selectStream, "Please Select stream");
    }else {
     setSuccessMsg(selectStream);
+    console.log(selectStreamVal);
   }
 
   function isAlphabate(isalpha) {
@@ -151,7 +186,7 @@ const validate = () => {
 //   }
 
 
-successMsg();
+ successMsg();
 };
 
 function setErrorMsg(input, errormsgs) {
@@ -165,3 +200,32 @@ function setSuccessMsg(input) {
   const inputBox = input.parentElement;
   inputBox.className = "input-box success";
 }
+
+//fetch post request
+
+
+// fetch("http://localhost:3000/posts",{
+//   method:'POST',
+//   body:JSON.stringify({
+//     title:firstName,
+//     body:body,
+//     id:id
+//   }),
+//   headers:{
+//     "Content-Type":"application/json; charset=UTF-8"
+// }
+// })
+
+// .then(function(response){
+//   return response.json()
+// })
+
+// .then(function(data){
+//   console.log(data);
+// })
+
+
+
+
+
+

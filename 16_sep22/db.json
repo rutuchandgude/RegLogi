@@ -1,15 +1,17 @@
 {
-  "posts": [
+  "registration": [
+
+    
     {
-      "id": 1,
-      "name": "rutuja",
-      "lastname": "chandgude"
-    },
-    {
-      "id": 2,
-      "name": "ashlesha",
-      "lastname": "ashture"
+      "id": 3,
+      "First name": "Rutuja",
+      "Last name": "Chandgude",
+      "Mobile number": "1234512345",
+      "Email id": "rutu@gmail.com",
+      "Password": "12341234",
+      "Confirm Password": "12341234",
+      "Gender": "Female",
+      "Select Stream": "Computer engineering"
     }
   ]
- 
 }
