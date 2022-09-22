@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Registration</title>
     <link rel="stylesheet" href="registration.css" />
 </head>
@@ -29,7 +30,7 @@
                     </div>
                     <div class="input-box">
                         <Label>Mobile Number: </Label>
-                        <input type="number" id="mobileno" value="" placeholder="password" autocomplete="off" />
+                        <input type="number" id="mobileno" value="" placeholder="Mobile number" autocomplete="off" />
                         <small>error msg</small>
                     </div>
                     <div class="input-box">
@@ -76,6 +77,7 @@
                 <div class="gender-details input-box">
                     <label id="selectlbl">Select Stream: </label>
                     <select id="slctstream">
+                        <option value="0">Select</option>
                         <option value="Aerospace/aeronotical engineering" >Aerospace/aeronotical engineering</option>
                         <option value="Chemical engineering">Chemical engineering</option>
                         <option value="Civil engineering">Civil engineering</option>
@@ -87,7 +89,7 @@
 
                 <div class="button input-box">
                     <button class="btn" type="submit" value="Register">Register</button><br>
-                    <a href="../Login/login.html"'>Login</a>
+                    <a href="../Login/login.html">Login</a>
                 </div>
 
             </form>

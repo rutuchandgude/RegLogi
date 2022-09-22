@@ -1,6 +1,6 @@
 const form = document.getElementById("form");
 const firstName = document.getElementById("fname");
-const lasttName = document.getElementById("lname");
+const lastName = document.getElementById("lname");
 const email = document.getElementById("emailid");
 const mobileNo = document.getElementById("mobileno");
 const password = document.getElementById("pass");
@@ -11,69 +11,17 @@ const selectStream = document.querySelector("#slctstream");
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   validate();
-
-  
-let form =  {
-  
-    "id": 13,
-    "First name":firstName,
-    "Last name":lasttName,
-    "Mobile number":mobileNo,
-    "Email id":email,
-    "Password":password,
-    "Confirm Password":cpassword,
-    "Gender":radioBtn,
-    "Select Stream":selectStream
-  
-};
-  //console.log(form);
-  // const payload=new FormData();
-
-  const formData = new FormData();
-  formData.append('First name', firstName.value);
-  console.log([...formData]);
-  fetch("http://localhost:3000/registration",{
-  method:'POST',
-  body:formData,})
-  .then(res=>res.json())
-  .then(data=>console.log(data))
-  .catch(err=>console.log(err));
-
- 
-
 });
 
-const sendData = (sRate,count)=>{
-    if(sRate === count){
-        alert('registration sucessfull');
-        swal("Welcome! " +firstName,"Registration Successful","success");
-    }
-}
-
-const successMsg=()=>{
-    let formCon = document.getElementsByClassName('input-box');
-    var count = formCon.length - 1;
-    for(var i=0;i<formCon.length;i++){
-        if(formCon[i].className === "input-box success"){
-            var sRate = 0+i;
-            console.log(sRate);
-            sendData(count);
-        }else{
-            return false;
-        }
-    }
-}
-
-const validate = () => {
+async function validate() {
   const firstNameVal = firstName.value.trim();
-  const lastNameVal = lasttName.value.trim();
+  const lastNameVal = lastName.value.trim();
   const emailVal = email.value.trim();
   const phoneVal = mobileNo.value.trim();
   const passwordVal = password.value.trim();
   const cpasswordVal = cpassword.value.trim();
   const radioBtnVal = radioBtn.value;
-   const selectStreamVal = selectStream.options[selectStream.selectedIndex].text;
-  
+  const selectStreamVal = selectStream.options[selectStream.selectedIndex].text;
 
   //validate usename
   if (firstNameVal === "") {
@@ -90,15 +38,15 @@ const validate = () => {
 
   //validate lastname
   if (lastNameVal === "") {
-    setErrorMsg(lasttName, "Lastname cannot be blank");
+    setErrorMsg(lastName, "Lastname cannot be blank");
   } else if (!isAlphabate(lastNameVal)) {
-    setErrorMsg(lasttName, "Lastname can only be alphabate");
+    setErrorMsg(lastName, "Lastname can only be alphabate");
   } else if (lastNameVal.length <= 2) {
-    setErrorMsg(lasttName, "Lastname should be min 3 char");
+    setErrorMsg(lastName, "Lastname should be min 3 char");
   } else if (lastNameVal.length >= 50) {
-    setErrorMsg(lasttName, "Lastname less than 50 char");
+    setErrorMsg(lastName, "Lastname less than 50 char");
   } else {
-    setSuccessMsg(lasttName);
+    setSuccessMsg(lastName);
   }
 
   //validate mobilno
@@ -127,44 +75,45 @@ const validate = () => {
     setSuccessMsg(email);
   }
 
-   //validate password
-   if (passwordVal === "") {
+  //validate password
+  if (passwordVal === "") {
     setErrorMsg(password, "password cannot be blank");
   } else if (passwordVal.length < 8) {
     setErrorMsg(password, "password cannot be less than 8 char");
   } else if (passwordVal.length > 25) {
     setErrorMsg(password, "password cannot be more than 25 char");
-//   } else if(!checkPass(passwordVal)) {
-//     setErrorMsg(password, "Enter valid password");
+  } else if (!checkPass(passwordVal)) {
+    setErrorMsg(password, "Enter strong password");
   } else {
     setSuccessMsg(password);
   }
 
-   //confirm password
-   if (cpasswordVal === "") {
+  //confirm password
+  if (cpasswordVal === "") {
     setErrorMsg(cpassword, "password cannot be blank");
-  } else if ((password.value) !== (cpassword.value)) {
+  } else if (password.value !== cpassword.value) {
     setErrorMsg(cpassword, "Password are not matching");
   } else {
     setSuccessMsg(cpassword);
   }
-  
-   //Gender
-   let i=0;
-   if(radioBtn[i].checked){
-console.log("Gender: "+radioBtn[i].value);
-   }else if(radioBtn[i+1].checked){
-    console.log("Gender: "+radioBtn[i+1].value);
-   }else if(radioBtn[i+2].checked){
-    console.log("Gender: "+radioBtn[i+2].value);
-   }else{
-    setErrorMsg("select gender");
-   }
 
-   //Select stream
-   if (selectStreamVal === "") {
-    setErrorMsg(selectStream, "Please Select stream");
-   }else {
+  //Gender
+  let i = 0;
+  if (radioBtn[i].checked) {
+    console.log("Gender: " + radioBtn[i].value);
+  } else if (radioBtn[i + 1].checked) {
+    console.log("Gender: " + radioBtn[i + 1].value);
+  } else if (radioBtn[i + 2].checked) {
+    console.log("Gender: " + radioBtn[i + 2].value);
+  } else {
+    alert("select gender");
+  }
+
+  //Select stream
+  let j = 0;
+  if (selectStream.value === "0") {
+    alert("Please Select stream");
+  } else {
     setSuccessMsg(selectStream);
     console.log(selectStreamVal);
   }
@@ -180,14 +129,67 @@ console.log("Gender: "+radioBtn[i].value);
   function isEmail(isemail) {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(isemail);
   }
+  // successMsg();
+  function checkPass(checkpass) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])$/.test(checkpass);
+  }
 
-//   function checkPass(checkpass){
-//     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])$/.test(checkpass);
-//   }
+  if (
+    firstNameVal != "" &&
+    firstNameVal.length >= 2 &&
+    firstNameVal.length <= 50 &&
+    lastNameVal != "" &&
+    lastNameVal.length >= 2 &&
+    lastNameVal.length <= 50 &&
+    phoneVal != 0 &&
+    isDigit(phoneVal) &&
+    phoneVal.length == 10 &&
+    emailVal != "" &&
+    emailVal.length > 5 &&
+    emailVal.length <= 100 &&
+    isEmail(emailVal) &&
+    passwordVal != "" &&
+    //  checkPass(passwordVal) &&
+    passwordVal.length >= 8 &&
+    passwordVal.length < 25 &&
+    cpasswordVal != "" &&
+    password.value == cpassword.value &&
+    selectStream.value != 0
+  ) {
+    let gender;
+    for (let i = 0; i < 3; i++) {
+      if (radioBtn[i].checked) {
+        radioBtn[i].value;
+        gender = radioBtn[i].value;
+      }
+    }
 
+    let fData = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      mobileNo: mobileNo.value,
+      password: password.value,
+      cpassword: cpassword.value,
+      radioBtn: gender,
+      selectStream: selectStream.value,
+    };
+    
+    // let flag=true;
 
- successMsg();
-};
+    let res = axios.post(
+      "http://localhost:3000/registration",
+      fData
+    );
+    let data = res.data;
+    console.log(data);
+
+    setTimeout(function() { alert("Registration Successfull..✨"); }, 5000);
+    window.location.href="../Login/login.html";
+  } else {
+    console.log("regierror");
+  }
+}
 
 function setErrorMsg(input, errormsgs) {
   const inputBox = input.parentElement;
@@ -200,32 +202,3 @@ function setSuccessMsg(input) {
   const inputBox = input.parentElement;
   inputBox.className = "input-box success";
 }
-
-//fetch post request
-
-
-// fetch("http://localhost:3000/posts",{
-//   method:'POST',
-//   body:JSON.stringify({
-//     title:firstName,
-//     body:body,
-//     id:id
-//   }),
-//   headers:{
-//     "Content-Type":"application/json; charset=UTF-8"
-// }
-// })
-
-// .then(function(response){
-//   return response.json()
-// })
-
-// .then(function(data){
-//   console.log(data);
-// })
-
-
-
-
-
-
